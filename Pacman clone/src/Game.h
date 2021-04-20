@@ -1,10 +1,12 @@
 #pragma once
 
-class Engine
+#include "TileMap.h"
+
+class Game
 {
 public:
-	Engine();
-	~Engine();
+	Game();
+	~Game();
 
 	void run();
 	bool isGameRunning();
@@ -18,6 +20,10 @@ private:
 	sf::RenderWindow mWindow;
 	bool gameRunning;
 
+	//Map
+	TileMap map;
+
+	//Timer
 	sf::Clock clock;
 	float dt;
 };

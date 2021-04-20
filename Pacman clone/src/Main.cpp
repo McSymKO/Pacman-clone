@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "Engine.h"
+#include "Game.h"
 
 int main()
 {
-    Engine engine;
-    engine.run();
+    Game game;
+    game.run();
 }
