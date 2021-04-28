@@ -63,21 +63,7 @@ bool Game::isIntersection(int x, int y)
 
 bool Game::canPacmanMove()
 {
-	switch (pacman.getDirection())
-	{
-		case Pacman_Directions::Directions::UP:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() - 1);
-			break;
-		case Pacman_Directions::Directions::DOWN:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() + 1);
-			break;
-		case Pacman_Directions::Directions::LEFT:
-			return !tileBlocksEntity(pacman.getTileX() - 1, pacman.getTileY());
-			break;
-		case Pacman_Directions::Directions::RIGHT:
-			return !tileBlocksEntity(pacman.getTileX() + 1, pacman.getTileY());
-			break;
-	}
+	//Check walls collision
 	
 	return true;
 }
@@ -100,7 +86,7 @@ void Game::updatePacmanMovement()
 	pacman.update(dt);
 
 	if (canPacmanMove() && !pacmanDead)
-		pacman.move();
+		pacman.move(dt);
 
 	else
 		pacman.stop();

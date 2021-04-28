@@ -2,7 +2,7 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: tileX(14), tileY(23), mDir(Pacman_Directions::Directions::IDLE)
+	:mDir(Pacman_Directions::Directions::IDLE), mSpeed(5.f)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
@@ -13,10 +13,7 @@ Pacman::Pacman()
 	mPlayer.setOrigin(textRect.left + textRect.width / 2.0f,
 					  textRect.top + textRect.height / 2.0f);
 
-	mPlayer.setPosition(sf::Vector2f(tileX * 16.f, tileY * 16.f + 8.f));
-
-	delay = 0.15f;
-	timer = 0.f;
+	mPlayer.setPosition(sf::Vector2f(14 * 16.f, 23 * 16.f + 8.f));
 }
 
 //Getters & Setters
@@ -40,28 +37,20 @@ void Pacman::setDirection()
 	}
 }
 
-const int& Pacman::getTileX()
-{
-	return tileX;
-}
-
-const int& Pacman::getTileY()
-{
-	return tileY;
-}
-
 Pacman_Directions::Directions Pacman::getDirection()
 {
 	return mDir;
 }
 
 //Functions
-void Pacman::move()
+void Pacman::move(const float& dt)
 {
+	sf::Vector2f movement(0.f, 0.f);
+
 	if (mDir == Pacman_Directions::Directions::IDLE)
 	{
-		tileX += 0;
-		tileY += 0;
+		movement.x += 0;
+		movement.y += 0;
 	}
 
 	else
@@ -69,36 +58,18 @@ void Pacman::move()
 		switch (mDir)
 		{
 		case Pacman_Directions::Directions::UP:
-			slowDownMovement(0, -1);
+			movement.y -= 1.f;
 			break;
 		case Pacman_Directions::Directions::DOWN:
-			slowDownMovement(0, 1);
+			movement.y += 1.f;
 			break;
 		case Pacman_Directions::Directions::LEFT:
-			slowDownMovement(-1, 0);
+			movement.x -= 1.f;
 			break;
 		case Pacman_Directions::Directions::RIGHT:
-			slowDownMovement(1, 0);
+			movement.x += 1.f;
 			break;
 		}
-	}
-	mPlayer.setPosition(tileX * 16.f, tileY * 16.f);
-}
-
-void Pacman::slowDownMovement(int x, int y)
-{
-	//Timer
-	float time = clock.getElapsedTime().asSeconds();
-	clock.restart();
-	timer += time;
-
-	if (timer > delay)
-	{
-		timer = 0;
-
-		//Action
-		tileX += x;
-		tileY += y;
 	}
 }
 

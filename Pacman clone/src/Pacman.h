@@ -20,8 +20,7 @@ public:
 	Pacman_Directions::Directions getDirection();
 
 	//Functions
-	void move();
-	void slowDownMovement(int x, int y);
+	void move(const float& dt);
 	void stop();
 
 	void update(float& dt);
@@ -30,14 +29,7 @@ public:
 private:
 	sf::Texture mTexture;
 	sf::Sprite mPlayer;
-
-	int tileX;
-	int tileY;
-
-	//Timer
-	sf::Clock clock;
-	float timer;
-	float delay;
+	float mSpeed;
 
 	Pacman_Directions::Directions mDir;
 };
