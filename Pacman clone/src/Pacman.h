@@ -21,6 +21,7 @@ public:
 
 	//Functions
 	void move();
+	void slowDownMovement(int x, int y);
 	void stop();
 
 	void update(float& dt);
@@ -32,6 +33,11 @@ private:
 
 	int tileX;
 	int tileY;
+
+	//Timer
+	sf::Clock clock;
+	float timer;
+	float delay;
 
 	Pacman_Directions::Directions mDir;
 };
