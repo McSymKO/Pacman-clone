@@ -20,7 +20,8 @@ public:
 	Pacman_Directions::Directions getDirection();
 
 	//Functions
-	void move(const float& dirX, const float& dirY, const float& dt);
+	void move();
+	void stop();
 
 	void update(float& dt);
 	void render(sf::RenderTarget& target);
@@ -31,8 +32,6 @@ private:
 
 	int tileX;
 	int tileY;
-
-	float mSpeed;
 
 	Pacman_Directions::Directions mDir;
 };

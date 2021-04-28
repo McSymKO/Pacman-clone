@@ -10,11 +10,15 @@ public:
 	~Game();
 
 	void run();
+	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();
+	bool isPacmanDead();
+	bool isIntersection(int x, int y);
+	bool canPacmanMove();
 
 	void pollEvents();
-	void updateDt();
 	void updatePacmanMovement();
+	void updateDt();
 	void update();
 	void render();
 	
@@ -26,10 +30,11 @@ private:
 	TileMap map;
 	const int tiles[28][31];
 
-	//Timer
+	//Delta time
 	sf::Clock clock;
 	float dt;
 
 	//Entities
 	Pacman pacman;
+	bool pacmanDead;
 };

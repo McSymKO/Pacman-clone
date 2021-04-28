@@ -2,16 +2,18 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: mSpeed(50.f), tileX(14), tileY(17), mDir(Pacman_Directions::Directions::IDLE)
+	: tileX(14), tileY(23), mDir(Pacman_Directions::Directions::IDLE)
 {
-	mTexture.loadFromFile("Textures/animations.png", sf::IntRect(0, 0, 32, 30));
+	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
+	mPlayer.setScale((sf::Vector2f(2.f, 2.f)));
 
 	//Position of Pacman
 	sf::FloatRect textRect = mPlayer.getLocalBounds();
 	mPlayer.setOrigin(textRect.left + textRect.width / 2.0f,
 					  textRect.top + textRect.height / 2.0f);
-	mPlayer.setPosition(sf::Vector2f(tileX * 16.f, 17.5f * 16.f));
+
+	mPlayer.setPosition(sf::Vector2f(tileX * 16.f, tileY * 16.f + 8.f));
 }
 
 //Getters & Setters
@@ -19,22 +21,18 @@ void Pacman::setDirection()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		--tileY;
 		mDir = Pacman_Directions::Directions::UP;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		++tileY;
 		mDir = Pacman_Directions::Directions::DOWN;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		--tileX;
 		mDir = Pacman_Directions::Directions::LEFT;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		++tileX;
 		mDir = Pacman_Directions::Directions::RIGHT;
 	}
 }
@@ -55,9 +53,38 @@ Pacman_Directions::Directions Pacman::getDirection()
 }
 
 //Functions
-void Pacman::move(const float& dirX, const float& dirY, const float& dt)
+void Pacman::move()
 {
-	mPlayer.move(dirX * mSpeed * dt, dirY * mSpeed * dt);
+	if (mDir == Pacman_Directions::Directions::IDLE)
+	{
+		tileX += 0;
+		tileY += 0;
+	}
+
+	else
+	{
+		switch (mDir)
+		{
+		case Pacman_Directions::Directions::UP:
+			--tileY;
+			break;
+		case Pacman_Directions::Directions::DOWN:
+			++tileY;
+			break;
+		case Pacman_Directions::Directions::LEFT:
+			--tileX;
+			break;
+		case Pacman_Directions::Directions::RIGHT:
+			++tileX;
+			break;
+		}
+	}
+	mPlayer.setPosition(tileX * 16.f, tileY * 16.f);
+}
+
+void Pacman::stop()
+{
+	mDir = Pacman_Directions::Directions::IDLE;
 }
 
 void Pacman::update(float& dt)
