@@ -14,9 +14,6 @@ Pacman::Pacman()
 					  textRect.top + textRect.height / 2.0f);
 
 	mPlayer.setPosition(sf::Vector2f(tileX * 16.f, tileY * 16.f + 8.f));
-
-	delay = 0.15f;
-	timer = 0.f;
 }
 
 //Getters & Setters
@@ -69,37 +66,26 @@ void Pacman::move()
 		switch (mDir)
 		{
 		case Pacman_Directions::Directions::UP:
-			slowDownMovement(0, -1);
+			movementHandling(0, -1);
 			break;
 		case Pacman_Directions::Directions::DOWN:
-			slowDownMovement(0, 1);
+			movementHandling(0, 1);
 			break;
 		case Pacman_Directions::Directions::LEFT:
-			slowDownMovement(-1, 0);
+			movementHandling(-1, 0);
 			break;
 		case Pacman_Directions::Directions::RIGHT:
-			slowDownMovement(1, 0);
+			movementHandling(1, 0);
 			break;
 		}
 	}
 	mPlayer.setPosition(tileX * 16.f, tileY * 16.f);
 }
 
-void Pacman::slowDownMovement(int x, int y)
+void Pacman::movementHandling(int x, int y)
 {
-	//Timer
-	float time = clock.getElapsedTime().asSeconds();
-	clock.restart();
-	timer += time;
-
-	if (timer > delay)
-	{
-		timer = 0;
-
-		//Action
-		tileX += x;
-		tileY += y;
-	}
+	tileX += x;
+	tileY += y;
 }
 
 void Pacman::stop()

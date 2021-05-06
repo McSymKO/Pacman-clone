@@ -34,7 +34,7 @@ Game::Game()
 {
 	//Window
 	mWindow.create(sf::VideoMode(448, 496), "Pacman clone ", sf::Style::Close);
-	mWindow.setFramerateLimit(144);
+	mWindow.setFramerateLimit(60);
 	std::cout << "[Game]: Window created" << "\n";
 
 	//Tile map
@@ -102,8 +102,6 @@ void Game::updatePacmanMovement()
 	if (canPacmanMove() && !pacmanDead)
 		pacman.move();
 
-	else
-		pacman.stop();
 }
 
 void Game::updateDt()
