@@ -2,7 +2,7 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	:mDir(Pacman_Directions::Directions::IDLE), mSpeed(5.f)
+	:mDir(Pacman_Directions::Directions::IDLE), mSpeed(25.f)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
@@ -37,42 +37,27 @@ void Pacman::setDirection()
 	}
 }
 
+const sf::Vector2f& Pacman::getPosition()
+{
+	return mPlayer.getPosition();
+}
+
+const float& Pacman::getSpeed()
+{
+	return mSpeed;
+}
+
+void Pacman::setPosition(sf::Vector2f pos)
+{
+	mPlayer.setPosition(pos);
+}
+
 Pacman_Directions::Directions Pacman::getDirection()
 {
 	return mDir;
 }
 
 //Functions
-void Pacman::move(const float& dt)
-{
-	sf::Vector2f movement(0.f, 0.f);
-
-	if (mDir == Pacman_Directions::Directions::IDLE)
-	{
-		movement.x += 0;
-		movement.y += 0;
-	}
-
-	else
-	{
-		switch (mDir)
-		{
-		case Pacman_Directions::Directions::UP:
-			movement.y -= 1.f;
-			break;
-		case Pacman_Directions::Directions::DOWN:
-			movement.y += 1.f;
-			break;
-		case Pacman_Directions::Directions::LEFT:
-			movement.x -= 1.f;
-			break;
-		case Pacman_Directions::Directions::RIGHT:
-			movement.x += 1.f;
-			break;
-		}
-	}
-}
-
 void Pacman::stop()
 {
 	mDir = Pacman_Directions::Directions::IDLE;

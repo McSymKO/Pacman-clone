@@ -41,6 +41,30 @@ bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, const int 
     return true;
 }
 
+const sf::FloatRect TileMap::getBounds(int x, int y, const int tiles[][31])
+{
+    for (int i = 0; i < 28; ++i)
+    {
+        for (int j = 0; j < 31; ++j)
+        {
+            if (i == x && j == y)
+            {
+                // get the current tile number
+                int tileNumber = tiles[i][j];
+
+                // find its position in the tileset texture
+                int tu = tileNumber % (m_tileset.getSize().x / 16);
+                int tv = tileNumber / (m_tileset.getSize().x / 16);
+
+
+                sf::FloatRect fRect(tu * 16, tv * 16, 16, 16);
+
+                return fRect;
+            }
+        }
+    }
+}
+
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	//Apply the tileset texture

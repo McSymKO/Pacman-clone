@@ -14,7 +14,7 @@ public:
 	bool isGameRunning();
 	bool isPacmanDead();
 	bool isIntersection(int x, int y);
-	bool canPacmanMove();
+	void pacmanMove();
 
 	void pollEvents();
 	void updatePacmanMovement();

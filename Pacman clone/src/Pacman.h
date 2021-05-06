@@ -15,12 +15,12 @@ public:
 	
 	//Getters & Setters
 	void setDirection();
-	const int& getTileX();
-	const int& getTileY();
 	Pacman_Directions::Directions getDirection();
+	void setPosition(sf::Vector2f pos);
+	const sf::Vector2f& getPosition();
+	const float& getSpeed();
 
 	//Functions
-	void move(const float& dt);
 	void stop();
 
 	void update(float& dt);

@@ -61,11 +61,20 @@ bool Game::isIntersection(int x, int y)
 	return true;
 }
 
-bool Game::canPacmanMove()
+void Game::pacmanMove()
 {
-	//Check walls collision
-	
-	return true;
+	sf::Vector2f movement(0.f, 0.f);
+
+	if (pacman.getDirection() == Pacman_Directions::Directions::UP)
+		movement.y -= 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::DOWN)
+		movement.y += 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::LEFT)
+		movement.x -= 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::RIGHT)
+		movement.x += 1.f;
+
+	//Check collision
 }
 
 void Game::pollEvents()
@@ -85,11 +94,32 @@ void Game::updatePacmanMovement()
 {
 	pacman.update(dt);
 
-	if (canPacmanMove() && !pacmanDead)
-		pacman.move(dt);
+	//Pacman movement
+	sf::Vector2f movement(0.f, 0.f);
+	
+	if (pacman.getDirection() == Pacman_Directions::Directions::UP)
+		movement.y -= 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::DOWN)
+		movement.y += 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::LEFT)
+		movement.x -= 1.f;
+	else if (pacman.getDirection() == Pacman_Directions::Directions::RIGHT)
+		movement.x += 1.f;
 
-	else
-		pacman.stop();
+	sf::Vector2f oldPos = pacman.getPosition(); 
+	sf::Vector2f newPos = pacman.getPosition() + movement * pacman.getSpeed() * dt;
+	pacman.setPosition(newPos);
+
+	for (int i = 0; i < 28; ++i)
+	{
+		for (int j = 0; j < 31; ++j)
+		{
+			if (pacman.getPosition().x + 30 >= map.getBounds(i, j, tiles).left && pacman.getPosition().x <= map.getBounds(i, j, tiles).left + map.getBounds(i, j, tiles).width && pacman.getPosition().y + 30 >= map.getBounds(i, j, tiles).top && pacman.getPosition().y <= map.getBounds(i, j, tiles).top + map.getBounds(i, j, tiles).height)
+			{
+				pacman.setPosition(oldPos);
+			}
+		}
+	}
 }
 
 void Game::updateDt()
