@@ -99,8 +99,18 @@ void Game::updatePacmanMovement()
 {
 	pacman.update(dt);
 
-	if (canPacmanMove() && !pacmanDead)
+	if (!pacmanDead)
+	{
 		pacman.move();
+
+		if (!canPacmanMove())
+		{
+			pacman.stop();
+		}
+
+	}
+		
+
 
 }
 

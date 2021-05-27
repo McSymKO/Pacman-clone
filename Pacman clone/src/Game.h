@@ -9,6 +9,7 @@ public:
 	Game();
 	~Game();
 
+	//Functions
 	void run();
 	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();

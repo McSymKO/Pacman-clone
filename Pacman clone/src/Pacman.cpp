@@ -66,26 +66,23 @@ void Pacman::move()
 		switch (mDir)
 		{
 		case Pacman_Directions::Directions::UP:
-			movementHandling(0, -1);
+			--tileY;
+			mPlayer.move(0.f, -1.f);
 			break;
 		case Pacman_Directions::Directions::DOWN:
-			movementHandling(0, 1);
+			++tileY;
+			mPlayer.move(0.f, 1.f);
 			break;
 		case Pacman_Directions::Directions::LEFT:
-			movementHandling(-1, 0);
+			--tileX;
+			mPlayer.move(-1.f, 0.f);
 			break;
 		case Pacman_Directions::Directions::RIGHT:
-			movementHandling(1, 0);
+			++tileX;
+			mPlayer.move(1.f, 0.f);
 			break;
 		}
 	}
-	mPlayer.setPosition(tileX * 16.f, tileY * 16.f);
-}
-
-void Pacman::movementHandling(int x, int y)
-{
-	tileX += x;
-	tileY += y;
 }
 
 void Pacman::stop()

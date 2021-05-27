@@ -21,7 +21,6 @@ public:
 
 	//Functions
 	void move();
-	void movementHandling(int x, int y);
 	void stop();
 
 	void update(float& dt);
