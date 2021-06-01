@@ -15,14 +15,18 @@ public:
 	
 	//Getters & Setters
 	void setDirection();
+	Pacman_Directions::Directions getDirection();
+	void setPosition(sf::Vector2f pos);
+	const sf::Vector2f& getPosition() const;
 	const int& getTileX();
 	const int& getTileY();
-	Pacman_Directions::Directions getDirection();
+	const float& getSpeed() const;
+	const sf::Vector2f& getMovement() const;
 
 	//Functions
 	void move();
-	void movementHandling(int x, int y);
 	void stop();
+	void sayDirection();
 
 	void update(float& dt);
 	void render(sf::RenderTarget& target);
@@ -30,6 +34,9 @@ public:
 private:
 	sf::Texture mTexture;
 	sf::Sprite mPlayer;
+
+	sf::Vector2f movement;
+	float mSpeed;
 
 	int tileX;
 	int tileY;

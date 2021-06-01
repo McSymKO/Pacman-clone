@@ -2,7 +2,7 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: tileX(14), tileY(23), mDir(Pacman_Directions::Directions::IDLE)
+	: tileX(14), tileY(23), movement(0.f, 0.f), mSpeed(40.f), mDir(Pacman_Directions::Directions::IDLE)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
@@ -37,6 +37,11 @@ void Pacman::setDirection()
 	}
 }
 
+void Pacman::setPosition(sf::Vector2f pos)
+{
+	mPlayer.setPosition(pos);
+}
+
 const int& Pacman::getTileX()
 {
 	return tileX;
@@ -52,40 +57,46 @@ Pacman_Directions::Directions Pacman::getDirection()
 	return mDir;
 }
 
+const sf::Vector2f& Pacman::getPosition() const
+{
+	return mPlayer.getPosition();
+}
+
+const float& Pacman::getSpeed() const
+{
+	return mSpeed;
+}
+
+const sf::Vector2f& Pacman::getMovement() const
+{
+	return movement;
+}
+
 //Functions
 void Pacman::move()
 {
-	if (mDir == Pacman_Directions::Directions::IDLE)
-	{
-		tileX += 0;
-		tileY += 0;
-	}
+	movement.x = 0.f;
+	movement.y = 0.f;
 
-	else
+	switch (mDir)
 	{
-		switch (mDir)
-		{
+		case Pacman_Directions::Directions::IDLE:
+			movement.x = 0.f;
+			movement.y = 0.f;
+			break;
 		case Pacman_Directions::Directions::UP:
-			movementHandling(0, -1);
+			movement.y = -1.f;
 			break;
 		case Pacman_Directions::Directions::DOWN:
-			movementHandling(0, 1);
+			movement.y = 1.f;
 			break;
 		case Pacman_Directions::Directions::LEFT:
-			movementHandling(-1, 0);
+			movement.x = -1.f;
 			break;
 		case Pacman_Directions::Directions::RIGHT:
-			movementHandling(1, 0);
+			movement.x = 1.f;
 			break;
-		}
 	}
-	mPlayer.setPosition(tileX * 16.f, tileY * 16.f);
-}
-
-void Pacman::movementHandling(int x, int y)
-{
-	tileX += x;
-	tileY += y;
 }
 
 void Pacman::stop()
@@ -93,9 +104,32 @@ void Pacman::stop()
 	mDir = Pacman_Directions::Directions::IDLE;
 }
 
+void Pacman::sayDirection()
+{
+	switch (mDir)
+	{
+	case Pacman_Directions::Directions::IDLE:
+		std::cout << "Direction: IDLE" << std::endl;
+		break;
+	case Pacman_Directions::Directions::UP:
+		std::cout << "Direction: UP" << std::endl;
+		break;
+	case Pacman_Directions::Directions::DOWN:
+		std::cout << "Direction: DOWN" << std::endl;
+		break;
+	case Pacman_Directions::Directions::LEFT:
+		std::cout << "Direction: LEFT" << std::endl;
+		break;
+	case Pacman_Directions::Directions::RIGHT:
+		std::cout << "Direction: RIGHT" << std::endl;
+		break;
+	}
+}
+
 void Pacman::update(float& dt)
 {
 	setDirection();
+	move();
 }
 
 void Pacman::render(sf::RenderTarget& target)

@@ -9,12 +9,12 @@ public:
 	Game();
 	~Game();
 
+	const sf::FloatRect getTileBounds(int x, int y) const;
+
 	void run();
 	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();
 	bool isPacmanDead();
-	bool isIntersection(int x, int y);
-	bool canPacmanMove();
 
 	void pollEvents();
 	void updatePacmanMovement();

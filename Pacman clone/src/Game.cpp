@@ -46,6 +46,13 @@ Game::~Game()
 	std::cout << "[Game]: Game is over" << "\n";
 }
 
+const sf::FloatRect Game::getTileBounds(int x, int y) const
+{
+	sf::FloatRect temp(x * 16.f, y * 16.f, 16.f, 16.f);
+
+	return temp;
+}
+
 bool Game::isGameRunning()
 {
 	return gameRunning;
@@ -54,32 +61,6 @@ bool Game::isGameRunning()
 bool Game::isPacmanDead()
 {
 	return pacmanDead;
-}
-
-bool Game::isIntersection(int x, int y)
-{
-	return true;
-}
-
-bool Game::canPacmanMove()
-{
-	switch (pacman.getDirection())
-	{
-		case Pacman_Directions::Directions::UP:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() - 1);
-			break;
-		case Pacman_Directions::Directions::DOWN:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() + 1);
-			break;
-		case Pacman_Directions::Directions::LEFT:
-			return !tileBlocksEntity(pacman.getTileX() - 1, pacman.getTileY());
-			break;
-		case Pacman_Directions::Directions::RIGHT:
-			return !tileBlocksEntity(pacman.getTileX() + 1, pacman.getTileY());
-			break;
-	}
-	
-	return true;
 }
 
 void Game::pollEvents()
@@ -97,11 +78,29 @@ void Game::pollEvents()
 
 void Game::updatePacmanMovement()
 {
+	//Setting direction
 	pacman.update(dt);
 
-	if (canPacmanMove() && !pacmanDead)
-		pacman.move();
+	//Calculating new position
+	sf::Vector2f oldPosition = pacman.getPosition();
+	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
+	pacman.setPosition(newPosition);
+	
+	//Tiles under pacman
+	int pacmanTileX = pacman.getPosition().x / 16.f;
+	int pacmanTileY = pacman.getPosition().y / 16.f;
 
+	//Reacting to pacman's collision with walls
+	if (tileBlocksEntity(pacmanTileX, pacmanTileY))
+	{
+		if (getTileBounds(pacmanTileX, pacmanTileY).contains(pacman.getPosition()))
+		{
+			/*pacman.sayDirection();*/
+
+			pacman.setPosition(sf::Vector2f(oldPosition.x, oldPosition.y));
+
+		}
+	}
 }
 
 void Game::updateDt()
