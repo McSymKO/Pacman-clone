@@ -26,7 +26,6 @@ public:
 	//Functions
 	void move();
 	void stop();
-	void sayDirection();
 
 	void update(float& dt);
 	void render(sf::RenderTarget& target);

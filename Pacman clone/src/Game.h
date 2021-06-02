@@ -9,8 +9,6 @@ public:
 	Game();
 	~Game();
 
-	const sf::FloatRect getTileBounds(int x, int y) const;
-
 	void run();
 	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();

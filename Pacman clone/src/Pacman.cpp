@@ -104,28 +104,6 @@ void Pacman::stop()
 	mDir = Pacman_Directions::Directions::IDLE;
 }
 
-void Pacman::sayDirection()
-{
-	switch (mDir)
-	{
-	case Pacman_Directions::Directions::IDLE:
-		std::cout << "Direction: IDLE" << std::endl;
-		break;
-	case Pacman_Directions::Directions::UP:
-		std::cout << "Direction: UP" << std::endl;
-		break;
-	case Pacman_Directions::Directions::DOWN:
-		std::cout << "Direction: DOWN" << std::endl;
-		break;
-	case Pacman_Directions::Directions::LEFT:
-		std::cout << "Direction: LEFT" << std::endl;
-		break;
-	case Pacman_Directions::Directions::RIGHT:
-		std::cout << "Direction: RIGHT" << std::endl;
-		break;
-	}
-}
-
 void Pacman::update(float& dt)
 {
 	setDirection();

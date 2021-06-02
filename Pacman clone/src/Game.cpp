@@ -46,13 +46,6 @@ Game::~Game()
 	std::cout << "[Game]: Game is over" << "\n";
 }
 
-const sf::FloatRect Game::getTileBounds(int x, int y) const
-{
-	sf::FloatRect temp(x * 16.f, y * 16.f, 16.f, 16.f);
-
-	return temp;
-}
-
 bool Game::isGameRunning()
 {
 	return gameRunning;
@@ -93,13 +86,7 @@ void Game::updatePacmanMovement()
 	//Reacting to pacman's collision with walls
 	if (tileBlocksEntity(pacmanTileX, pacmanTileY))
 	{
-		if (getTileBounds(pacmanTileX, pacmanTileY).contains(pacman.getPosition()))
-		{
-			/*pacman.sayDirection();*/
-
-			pacman.setPosition(sf::Vector2f(oldPosition.x, oldPosition.y));
-
-		}
+		pacman.setPosition(oldPosition);
 	}
 }
 
