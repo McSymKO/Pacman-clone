@@ -18,6 +18,7 @@ public:
 	const int& getTileY();
 	Pacman_Directions::Directions getDirection();
 	void setDirection(Pacman_Directions::Directions direction);
+	const float& getSpeed() const;
 
 	//Functions
 	void setMovement();
@@ -33,6 +34,9 @@ private:
 
 	int tileX;
 	int tileY;
+
+	sf::Vector2f movement;
+	float mSpeed;
 
 	Pacman_Directions::Directions mDir;
 };

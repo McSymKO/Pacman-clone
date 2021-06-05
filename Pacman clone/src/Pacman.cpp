@@ -2,7 +2,7 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: tileX(14), tileY(23), mDir(Pacman_Directions::Directions::IDLE)
+	: tileX(14), tileY(23), mSpeed(5.f), mDir(Pacman_Directions::Directions::IDLE)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
@@ -37,6 +37,11 @@ void Pacman::setDirection(Pacman_Directions::Directions direction)
 	mDir = direction;
 }
 
+const float& Pacman::getSpeed() const
+{
+	return mSpeed;
+}
+
 void Pacman::setMovement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -60,33 +65,24 @@ void Pacman::setMovement()
 //Functions
 void Pacman::move()
 {
-	if (mDir == Pacman_Directions::Directions::IDLE)
+	switch (mDir)
 	{
-		tileX += 0;
-		tileY += 0;
-	}
-
-	else
-	{
-		switch (mDir)
-		{
-		case Pacman_Directions::Directions::UP:
-			--tileY;
-			mPlayer.move(0.f, -1.f);
-			break;
-		case Pacman_Directions::Directions::DOWN:
-			++tileY;
-			mPlayer.move(0.f, 1.f);
-			break;
-		case Pacman_Directions::Directions::LEFT:
-			--tileX;
-			mPlayer.move(-1.f, 0.f);
-			break;
-		case Pacman_Directions::Directions::RIGHT:
-			++tileX;
-			mPlayer.move(1.f, 0.f);
-			break;
-		}
+	case Pacman_Directions::Directions::IDLE:
+		movement.x += 0.f;
+		movement.y += 0.f;
+		break;
+	case Pacman_Directions::Directions::UP:
+		movement.y -= 1.f;
+		break;
+	case Pacman_Directions::Directions::DOWN:
+		movement.y += 1.f;
+		break;
+	case Pacman_Directions::Directions::LEFT:
+		movement.x -= 1.f;
+		break;
+	case Pacman_Directions::Directions::RIGHT:
+		movement.x += 1.f;
+		break;
 	}
 }
 
