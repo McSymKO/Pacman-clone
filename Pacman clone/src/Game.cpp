@@ -96,17 +96,17 @@ void Game::updatePacmanMovement()
 	//Setting direction
 	pacman.update(dt);
 
-	//Calculating new position
-	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
-
-	pacman.setPosition(newPosition);
-	
 	//Tiles under pacman
 	int pacmanTileX = pacman.getPosition().x / 16.f;
 	int pacmanTileY = pacman.getPosition().y / 16.f;
 
-	//Reacting to pacman's collision with walls
+	//Calculating new position
+	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
 
+	//if (pacmanCanMove())
+		pacman.setPosition(newPosition);
+	/*else
+		pacman.stop();*/
 }
 
 void Game::updateDt()

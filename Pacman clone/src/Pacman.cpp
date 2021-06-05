@@ -42,6 +42,21 @@ const float& Pacman::getSpeed() const
 	return mSpeed;
 }
 
+const sf::Vector2f& Pacman::getMovement() const
+{
+	return movement;
+}
+
+const sf::Vector2f& Pacman::getPosition() const
+{
+	return mPlayer.getPosition();
+}
+
+void Pacman::setPosition(sf::Vector2f pos)
+{
+	mPlayer.setPosition(pos);
+}
+
 void Pacman::setMovement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
