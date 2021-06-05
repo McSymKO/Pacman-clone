@@ -56,30 +56,26 @@ bool Game::isPacmanDead()
 	return pacmanDead;
 }
 
-bool Game::isIntersection(int x, int y)
-{
-	return true;
-}
-
-bool Game::canPacmanMove()
+bool Game::pacmanCanMove()
 {
 	switch (pacman.getDirection())
 	{
-		case Pacman_Directions::Directions::UP:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() - 1);
-			break;
-		case Pacman_Directions::Directions::DOWN:
-			return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() + 1);
-			break;
-		case Pacman_Directions::Directions::LEFT:
-			return !tileBlocksEntity(pacman.getTileX() - 1, pacman.getTileY());
-			break;
-		case Pacman_Directions::Directions::RIGHT:
-			return !tileBlocksEntity(pacman.getTileX() + 1, pacman.getTileY());
-			break;
+	case Pacman_Directions::Directions::UP:
+		return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() - 1);
+		break;
+	case Pacman_Directions::Directions::DOWN:
+		return !tileBlocksEntity(pacman.getTileX(), pacman.getTileY() + 1);
+		break;
+	case Pacman_Directions::Directions::LEFT:
+		return !tileBlocksEntity(pacman.getTileX() - 1, pacman.getTileY());
+		break;
+	case Pacman_Directions::Directions::RIGHT:
+		return !tileBlocksEntity(pacman.getTileX() + 1, pacman.getTileY());
+		break;
+
+	default:
+		return false;
 	}
-	
-	return true;
 }
 
 void Game::pollEvents()
@@ -97,20 +93,19 @@ void Game::pollEvents()
 
 void Game::updatePacmanMovement()
 {
+	//Setting direction
 	pacman.update(dt);
 
-	if (!pacmanDead)
-	{
-		pacman.move();
+	//Calculating new position
+	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
 
-		if (!canPacmanMove())
-		{
-			pacman.stop();
-		}
+	pacman.setPosition(newPosition);
+	
+	//Tiles under pacman
+	int pacmanTileX = pacman.getPosition().x / 16.f;
+	int pacmanTileY = pacman.getPosition().y / 16.f;
 
-	}
-		
-
+	//Reacting to pacman's collision with walls
 
 }
 

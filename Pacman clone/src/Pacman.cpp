@@ -17,7 +17,27 @@ Pacman::Pacman()
 }
 
 //Getters & Setters
-void Pacman::setDirection()
+const int& Pacman::getTileX()
+{
+	return tileX;
+}
+
+const int& Pacman::getTileY()
+{
+	return tileY;
+}
+
+Pacman_Directions::Directions Pacman::getDirection()
+{
+	return mDir;
+}
+
+void Pacman::setDirection(Pacman_Directions::Directions direction)
+{
+	mDir = direction;
+}
+
+void Pacman::setMovement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
@@ -35,21 +55,6 @@ void Pacman::setDirection()
 	{
 		mDir = Pacman_Directions::Directions::RIGHT;
 	}
-}
-
-const int& Pacman::getTileX()
-{
-	return tileX;
-}
-
-const int& Pacman::getTileY()
-{
-	return tileY;
-}
-
-Pacman_Directions::Directions Pacman::getDirection()
-{
-	return mDir;
 }
 
 //Functions
@@ -92,7 +97,7 @@ void Pacman::stop()
 
 void Pacman::update(float& dt)
 {
-	setDirection();
+	setMovement();
 }
 
 void Pacman::render(sf::RenderTarget& target)

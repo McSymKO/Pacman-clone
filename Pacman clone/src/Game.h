@@ -14,8 +14,7 @@ public:
 	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();
 	bool isPacmanDead();
-	bool isIntersection(int x, int y);
-	bool canPacmanMove();
+	bool pacmanCanMove();
 
 	void pollEvents();
 	void updatePacmanMovement();

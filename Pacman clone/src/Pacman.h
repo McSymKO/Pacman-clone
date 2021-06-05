@@ -14,12 +14,13 @@ public:
 	Pacman();
 	
 	//Getters & Setters
-	void setDirection();
 	const int& getTileX();
 	const int& getTileY();
 	Pacman_Directions::Directions getDirection();
+	void setDirection(Pacman_Directions::Directions direction);
 
 	//Functions
+	void setMovement();
 	void move();
 	void stop();
 
