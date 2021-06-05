@@ -21,7 +21,6 @@ public:
 	const sf::Vector2f& getPosition() const;
 	Pacman_Directions::Directions getDirection();
 
-	void setDirection(Pacman_Directions::Directions direction);
 	void setPosition(sf::Vector2f pos);
 
 	//Functions

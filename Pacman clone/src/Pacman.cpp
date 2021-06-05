@@ -2,7 +2,7 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: tileX(14), tileY(23), mSpeed(5.f), mDir(Pacman_Directions::Directions::IDLE)
+	: tileX(14), tileY(23), movement(0.f, 0.f), mSpeed(40.f), mDir(Pacman_Directions::Directions::IDLE)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
@@ -17,46 +17,6 @@ Pacman::Pacman()
 }
 
 //Getters & Setters
-const int& Pacman::getTileX()
-{
-	return tileX;
-}
-
-const int& Pacman::getTileY()
-{
-	return tileY;
-}
-
-Pacman_Directions::Directions Pacman::getDirection()
-{
-	return mDir;
-}
-
-void Pacman::setDirection(Pacman_Directions::Directions direction)
-{
-	mDir = direction;
-}
-
-const float& Pacman::getSpeed() const
-{
-	return mSpeed;
-}
-
-const sf::Vector2f& Pacman::getMovement() const
-{
-	return movement;
-}
-
-const sf::Vector2f& Pacman::getPosition() const
-{
-	return mPlayer.getPosition();
-}
-
-void Pacman::setPosition(sf::Vector2f pos)
-{
-	mPlayer.setPosition(pos);
-}
-
 void Pacman::setMovement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -77,27 +37,65 @@ void Pacman::setMovement()
 	}
 }
 
+void Pacman::setPosition(sf::Vector2f pos)
+{
+	mPlayer.setPosition(pos);
+}
+
+const int& Pacman::getTileX()
+{
+	return tileX;
+}
+
+const int& Pacman::getTileY()
+{
+	return tileY;
+}
+
+Pacman_Directions::Directions Pacman::getDirection()
+{
+	return mDir;
+}
+
+const sf::Vector2f& Pacman::getPosition() const
+{
+	return mPlayer.getPosition();
+}
+
+const float& Pacman::getSpeed() const
+{
+	return mSpeed;
+}
+
+const sf::Vector2f& Pacman::getMovement() const
+{
+	return movement;
+}
+
 //Functions
 void Pacman::move()
 {
+	movement.x = 0.f;
+	movement.y = 0.f;
+
 	switch (mDir)
 	{
-	case Pacman_Directions::Directions::IDLE:
-		movement.x += 0.f;
-		movement.y += 0.f;
-		break;
-	case Pacman_Directions::Directions::UP:
-		movement.y -= 1.f;
-		break;
-	case Pacman_Directions::Directions::DOWN:
-		movement.y += 1.f;
-		break;
-	case Pacman_Directions::Directions::LEFT:
-		movement.x -= 1.f;
-		break;
-	case Pacman_Directions::Directions::RIGHT:
-		movement.x += 1.f;
-		break;
+		case Pacman_Directions::Directions::IDLE:
+			movement.x = 0.f;
+			movement.y = 0.f;
+			break;
+		case Pacman_Directions::Directions::UP:
+			movement.y = -1.f;
+			break;
+		case Pacman_Directions::Directions::DOWN:
+			movement.y = 1.f;
+			break;
+		case Pacman_Directions::Directions::LEFT:
+			movement.x = -1.f;
+			break;
+		case Pacman_Directions::Directions::RIGHT:
+			movement.x = 1.f;
+			break;
 	}
 }
 
@@ -109,6 +107,7 @@ void Pacman::stop()
 void Pacman::update(float& dt)
 {
 	setMovement();
+	move();
 }
 
 void Pacman::render(sf::RenderTarget& target)
