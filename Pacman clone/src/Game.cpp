@@ -56,6 +56,46 @@ bool Game::isPacmanDead()
 	return pacmanDead;
 }
 
+void Game::pacmanCollision()
+{
+	//Calculating new position
+	sf::Vector2f oldPosition = pacman.getPosition();
+	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
+	pacman.setPosition(newPosition);
+
+	//Tiles under pacman
+	int pacmanTileX = pacman.getPosition().x / 16.f;
+	int pacmanTileY = pacman.getPosition().y / 16.f;
+
+	//Reacting to pacman's collision with walls
+	if (tileBlocksEntity(pacmanTileX, pacmanTileY))
+	{
+		pacman.setPosition(oldPosition);
+	}
+
+	//Reaction to pacman's collision with points
+	else if (tiles[pacmanTileX][pacmanTileY] == 45)
+	{
+		tiles[pacmanTileX][pacmanTileY] = 44;
+		pacman.eatDot();
+		map.load("Textures/map.png", sf::Vector2u(16, 16), tiles, 28, 31);
+	}
+
+	//Reaction to pacman's collision with big point
+	else if (tiles[pacmanTileX][pacmanTileY] == 47)
+	{
+		tiles[pacmanTileX][pacmanTileY] = 44;
+		map.load("Textures/map.png", sf::Vector2u(16, 16), tiles, 28, 31);
+		
+		//more reactions...
+	}
+}
+
+void Game::loop()
+{
+	updatePacmanMovement();
+}
+
 void Game::pollEvents()
 {
 	sf::Event ev;
@@ -73,21 +113,14 @@ void Game::updatePacmanMovement()
 {
 	//Setting direction
 	pacman.update(dt);
+	pacmanCollision();
 
-	//Calculating new position
-	sf::Vector2f oldPosition = pacman.getPosition();
-	sf::Vector2f newPosition = pacman.getPosition() + pacman.getMovement() * pacman.getSpeed() * dt;
-	pacman.setPosition(newPosition);
-	
-	//Tiles under pacman
-	int pacmanTileX = pacman.getPosition().x / 16.f;
-	int pacmanTileY = pacman.getPosition().y / 16.f;
+	//Checking getting out of borders
+	 if (pacman.getPosition().x < 0.f && pacman.getDirection() == Pacman_Directions::Directions::LEFT)
+		pacman.setPosition(sf::Vector2f(448.f, 232.f));
 
-	//Reacting to pacman's collision with walls
-	if (tileBlocksEntity(pacmanTileX, pacmanTileY))
-	{
-		pacman.setPosition(oldPosition);
-	}
+	 else if (pacman.getPosition().x > 445.f && pacman.getDirection() == Pacman_Directions::Directions::RIGHT)
+		pacman.setPosition(sf::Vector2f(0.f, 232.f));
 }
 
 void Game::updateDt()
@@ -98,9 +131,7 @@ void Game::updateDt()
 void Game::update()
 {
 	pollEvents();
-
-	//Pacman movement
-	updatePacmanMovement();
+	loop();
 }
 
 void Game::render()
@@ -108,6 +139,7 @@ void Game::render()
 	mWindow.clear();
 	mWindow.draw(map);
 	pacman.render(mWindow);
+	ghosts.render(mWindow);
 	mWindow.display();
 }
 

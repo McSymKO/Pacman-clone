@@ -2,6 +2,7 @@
 
 #include "TileMap.h"
 #include "Pacman.h"
+#include "Ghost.h"
 
 class Game
 {
@@ -13,6 +14,8 @@ public:
 	bool tileBlocksEntity(int x, int y);
 	bool isGameRunning();
 	bool isPacmanDead();
+	void pacmanCollision();
+	void loop();
 
 	void pollEvents();
 	void updatePacmanMovement();
@@ -26,7 +29,7 @@ private:
 
 	//Map
 	TileMap map;
-	const int tiles[28][31];
+	int tiles[28][31];
 
 	//Delta time
 	sf::Clock clock;
@@ -34,5 +37,6 @@ private:
 
 	//Entities
 	Pacman pacman;
+	Ghost ghosts;
 	bool pacmanDead;
 };

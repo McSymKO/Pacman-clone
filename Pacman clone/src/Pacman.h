@@ -22,10 +22,11 @@ public:
 	const int& getTileY();
 	const float& getSpeed() const;
 	const sf::Vector2f& getMovement() const;
+	const sf::FloatRect& getBounds();
 
 	//Functions
 	void move();
-	void stop();
+	void eatDot();
 
 	void update(float& dt);
 	void render(sf::RenderTarget& target);
@@ -41,5 +42,7 @@ private:
 	int tileY;
 
 	Pacman_Directions::Directions mDir;
+
+	unsigned points;
 };
 

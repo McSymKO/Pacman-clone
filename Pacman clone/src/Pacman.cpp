@@ -2,16 +2,17 @@
 #include "Pacman.h"
 
 Pacman::Pacman()
-	: tileX(14), tileY(23), movement(0.f, 0.f), mSpeed(40.f), mDir(Pacman_Directions::Directions::IDLE)
+	: tileX(14), tileY(23), movement(0.f, 0.f), mSpeed(40.f), mDir(Pacman_Directions::Directions::IDLE),
+	points(0)
 {
 	mTexture.loadFromFile("Textures/things.png", sf::IntRect(0, 0, 15, 15));
 	mPlayer.setTexture(mTexture);
-	mPlayer.setScale((sf::Vector2f(2.f, 2.f)));
+	mPlayer.setScale(2.f, 2.f);
 
 	//Position of Pacman
-	sf::FloatRect textRect = mPlayer.getLocalBounds();
-	mPlayer.setOrigin(textRect.left + textRect.width / 2.0f,
-					  textRect.top + textRect.height / 2.0f);
+	sf::FloatRect rect = mPlayer.getLocalBounds();
+	mPlayer.setOrigin(rect.left + rect.width / 2.0f,
+		rect.top + rect.height / 2.0f);
 
 	mPlayer.setPosition(sf::Vector2f(tileX * 16.f, tileY * 16.f + 8.f));
 }
@@ -72,6 +73,11 @@ const sf::Vector2f& Pacman::getMovement() const
 	return movement;
 }
 
+const sf::FloatRect& Pacman::getBounds()
+{
+	return mPlayer.getGlobalBounds();
+}
+
 //Functions
 void Pacman::move()
 {
@@ -80,10 +86,6 @@ void Pacman::move()
 
 	switch (mDir)
 	{
-		case Pacman_Directions::Directions::IDLE:
-			movement.x = 0.f;
-			movement.y = 0.f;
-			break;
 		case Pacman_Directions::Directions::UP:
 			movement.y = -1.f;
 			break;
@@ -99,9 +101,9 @@ void Pacman::move()
 	}
 }
 
-void Pacman::stop()
+void Pacman::eatDot()
 {
-	mDir = Pacman_Directions::Directions::IDLE;
+	++points;
 }
 
 void Pacman::update(float& dt)
